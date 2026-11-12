@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LeetCode &amp; HackerRank Python Solutions</title>
+<meta name="description" content="Explained Python solutions for LeetCode Top Interview 150, Top 100 Liked and the HackerRank Python domain: idea, steps, code, complexity and pitfalls.">
+<style>
+:root {
+  --bg: #f6f5f1; --panel: #ffffff; --panel-2: #fbfaf7; --text: #1d1c1a; --muted: #6b6860;
+  --line: #e4e1d8; --accent: #2f6f5e; --accent-soft: #e3efe9; --accent-text: #24584a;
+  --easy: #2e8b57; --medium: #c48a12; --hard: #c2413b; --code-bg: #f7f6f2; --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+}
+:root.dark {
+  --bg: #15171a; --panel: #1c1f23; --panel-2: #20242a; --text: #e8e6e1; --muted: #9a978f;
+  --line: #2d3238; --accent: #6cc3a6; --accent-soft: #21332d; --accent-text: #8fd6bd;
+  --easy: #5fca8c; --medium: #e6b34a; --hard: #f07670; --code-bg: #272822; --shadow: none;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); color: var(--text); font: 15px/1.6 var(--sans); }
+a { color: var(--accent-text); }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* header */
+header { position: sticky; top: 0; z-index: 20; background: var(--panel); border-bottom: 1px solid var(--line); }
+.bar { display: flex; align-items: center; gap: 12px; padding: 10px 18px; flex-wrap: wrap; }
+.brand { font-weight: 700; letter-spacing: -.01em; font-size: 16px; margin-right: 8px; white-space: nowrap; }
+.brand span { color: var(--accent); }
+.tabs { display: flex; gap: 4px; background: var(--panel-2); border: 1px solid var(--line); padding: 3px; border-radius: 10px; }
+.tab { border: 0; background: transparent; padding: 6px 14px; border-radius: 7px; font-weight: 600; color: var(--muted); }
+.tab.active { background: var(--panel); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+:root.dark .tab.active { background: var(--accent-soft); color: var(--accent-text); }
+.spacer { flex: 1; }
+.search { min-width: 220px; flex: 0 1 300px; padding: 7px 12px; border-radius: 9px; border: 1px solid var(--line); background: var(--panel-2); color: var(--text); font: inherit; }
+.search:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.toggle { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--panel-2); padding: 6px 10px; border-radius: 9px; font-size: 13px; white-space: nowrap; }
+.toggle.on { border-color: var(--accent); color: var(--accent-text); background: var(--accent-soft); }
+.subbar { display: flex; gap: 6px; padding: 0 18px 10px; flex-wrap: wrap; }
+.subtab { border: 1px solid var(--line); background: transparent; padding: 4px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.subtab.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-text); }
+.menu-btn { display: none; border: 1px solid var(--line); background: var(--panel-2); border-radius: 8px; padding: 5px 10px; }
+
+/* layout */
+.layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: calc(100vh - 100px); }
+aside { border-right: 1px solid var(--line); background: var(--panel); overflow-y: auto; position: sticky; top: var(--hdr, 100px); height: calc(100vh - var(--hdr, 100px)); padding: 8px 0 40px; }
+.sec { border-bottom: 1px solid var(--line); }
+.sec-h { display: flex; align-items: center; justify-content: space-between; width: 100%; border: 0; background: transparent; padding: 10px 16px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); text-align: left; }
+.sec-h .count { font-weight: 600; font-size: 12px; text-transform: none; letter-spacing: 0; }
+.sec.collapsed .items { display: none; }
+.item { display: flex; align-items: center; gap: 8px; padding: 6px 16px 6px 18px; color: var(--text); text-decoration: none; font-size: 14px; line-height: 1.35; border-left: 3px solid transparent; }
+.item:hover { background: var(--panel-2); }
+.item.active { background: var(--accent-soft); border-left-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+.item .num { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 34px; font-size: 12px; }
+.item .t { flex: 1; }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.dot.Easy { background: var(--easy); } .dot.Medium { background: var(--medium); } .dot.Hard { background: var(--hard); }
+.check { color: var(--accent); font-size: 13px; width: 14px; text-align: center; flex: none; }
+
+main { padding: 28px 40px 80px; min-width: 0; }
+.wrap { max-width: 900px; margin: 0 auto; }
+.crumbs { color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+h1 { font-size: 26px; line-height: 1.25; margin: 0 0 10px; letter-spacing: -.015em; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 18px; }
+.badge { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); }
+.badge.Easy { color: var(--easy); } .badge.Medium { color: var(--medium); } .badge.Hard { color: var(--hard); }
+.badge.list { color: var(--muted); font-weight: 600; }
+.solved-btn { margin-left: auto; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px 26px; box-shadow: var(--shadow); margin-bottom: 18px; }
+.card h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 10px; }
+.content p { margin: 10px 0; }
+.content ul, .content ol { padding-left: 22px; margin: 8px 0; }
+.content li { margin: 3px 0; }
+.content code { font-family: var(--mono); font-size: .88em; background: var(--code-bg); border: 1px solid var(--line); padding: 1px 5px; border-radius: 5px; }
+.content table { border-collapse: collapse; margin: 12px 0; font-size: 14px; display: block; overflow-x: auto; }
+.content th, .content td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; }
+.content th { background: var(--panel-2); }
+.codewrap { position: relative; margin: 14px 0; }
+.content .hl { border-radius: 10px; border: 1px solid var(--line); overflow: hidden; }
+.content .hl pre, .content pre { margin: 0; padding: 14px 16px; overflow-x: auto; font: 13.5px/1.55 var(--mono); background: var(--code-bg); }
+.content .hl pre code, .content pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.copy { position: absolute; top: 8px; right: 8px; font-size: 12px; padding: 3px 10px; border-radius: 7px; border: 1px solid var(--line); background: var(--panel); opacity: .85; }
+.copy:hover { opacity: 1; border-color: var(--accent); }
+.copy.done { color: var(--accent-text); border-color: var(--accent); }
+.reveal { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 28px; text-align: center; color: var(--muted); }
+.reveal button { border: 1px solid var(--accent); background: var(--accent-soft); color: var(--accent-text); font-weight: 700; padding: 8px 18px; border-radius: 10px; }
+.pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 22px; }
+.pager a { flex: 1; text-decoration: none; border: 1px solid var(--line); background: var(--panel); border-radius: 12px; padding: 12px 16px; color: var(--text); }
+.pager a:hover { border-color: var(--accent); }
+.pager small { display: block; color: var(--muted); font-size: 12px; }
+.pager .next { text-align: right; }
+
+/* home */
+.hero { margin-bottom: 22px; }
+.hero p { color: var(--muted); margin: 4px 0 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.tile { display: block; text-decoration: none; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow); }
+.tile:hover { border-color: var(--accent); }
+.tile b { display: block; font-size: 15px; }
+.tile span { color: var(--muted); font-size: 13px; }
+.progress { height: 6px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; margin-top: 10px; overflow: hidden; }
+.progress i { display: block; height: 100%; background: var(--accent); }
+.empty { color: var(--muted); padding: 14px 18px; font-size: 14px; }
+.hidden { display: none !important; }
+
+/*PYGMENTS_LIGHT*/
+/*PYGMENTS_DARK*/
+.dark .hl { background: var(--code-bg); }
+.hl .err { border: 0 !important; }
+
+@media (max-width: 860px) {
+  header { position: relative; }
+  .layout { grid-template-columns: 1fr; }
+  aside { position: fixed; left: 0; top: 0; height: 100vh; width: 86%; max-width: 340px; z-index: 30; transform: translateX(-102%); transition: transform .2s; box-shadow: 4px 0 20px rgba(0,0,0,.15); }
+  aside.open { transform: none; }
+  .menu-btn { display: inline-block; }
+  main { padding: 18px 16px 60px; }
+  .card { padding: 16px; }
+  .search { min-width: 0; flex: 1 1 160px; }
+}
+.gh-link { text-decoration: none; display: inline-flex; align-items: center; }
+@media (max-width: 760px) { .gh-link { display: none; } }
+</style>
+</head>
+<body>
+<header id="hdr">
+  <div class="bar">
+    <button class="menu-btn" id="menuBtn" aria-label="Open problem list">☰</button>
+    <div class="brand">Interview <span>Prep</span> Notes</div>
+    <div class="tabs" role="tablist">
+      <button class="tab" data-site="lc">LeetCode</button>
+      <button class="tab" data-site="hr">HackerRank</button>
+    </div>
+    <div class="spacer"></div>
+    <input class="search" id="search" type="search" placeholder="Search problems (name or number)…">
+    <button class="toggle" id="practiceBtn" title="Hide solutions until you click Show">Practice mode</button>
+    <button class="toggle" id="themeBtn" title="Switch light / dark">Dark</button>
+    <a class="toggle gh-link" href="https://github.com/MarwanTarekZaky/leetcode-hackerrank-solutions" target="_blank" rel="noopener" title="Source on GitHub">GitHub ↗</a>
+  </div>
+  <div class="subbar" id="subbar"></div>
+</header>
+<div class="layout">
+  <aside id="side"></aside>
+  <main><div class="wrap" id="view"></div></main>
+</div>
+
+<script>
+const DATA = __DATA__;
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+let solved = store.get("solved", {});
+let practice = store.get("practice", false);
+let collapsed = store.get("collapsed", {});
+let theme = store.get("theme", window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+
+function applyTheme() {
+  document.documentElement.classList.toggle("dark", theme === "dark");
+  $("#themeBtn").textContent = theme === "dark" ? "Light" : "Dark";
+}
+function applyPractice() { $("#practiceBtn").classList.toggle("on", practice); }
+
+// ---------- routing: #lc/top150/88  #lc/top100  #hr/strings/capitalize
+function parseHash() {
+  const p = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
+  if (p[0] === "hr") return {site: "hr", sec: p[1] || null, prob: p[2] || null};
+  return {site: "lc", list: (p[1] === "top100" ? "top100" : "top150"), prob: p[2] ? Number(p[2]) : null};
+}
+
+// ordered entries for the current view: [{key, href, label, num, diff, secName, secSlug}]
+function entries(route) {
+  const out = [];
+  if (route.site === "lc") {
+    const L = DATA.leetcode.lists[route.list];
+    for (const s of L.sections) for (const id of s.ids) {
+      const p = DATA.leetcode.problems[id];
+      out.push({key: "lc:" + id, href: `#lc/${route.list}/${id}`, label: p.title, num: id, diff: p.difficulty, secName: s.name, secSlug: s.slug, id});
+    }
+  } else {
+    for (const s of DATA.hackerrank.sections) for (const p of s.problems)
+      out.push({key: "hr:" + s.slug + "/" + p.slug, href: `#hr/${s.slug}/${p.slug}`, label: p.title, secName: s.name, secSlug: s.slug, p});
+  }
+  return out;
+}
+
+function renderHeader(route) {
+  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.site === route.site));
+  const sb = $("#subbar");
+  if (route.site === "lc") {
+    sb.innerHTML = Object.entries(DATA.leetcode.lists).map(([k, L]) =>
+      `<button class="subtab ${route.list === k ? "active" : ""}" data-list="${k}">${esc(L.name)} <span style="opacity:.6">(${L.sections.reduce((a, s) => a + s.ids.length, 0)})</span></button>`).join("");
+  } else {
+    sb.innerHTML = `<button class="subtab active">Python domain <span style="opacity:.6">(${DATA.hackerrank.sections.reduce((a, s) => a + s.problems.length, 0)})</span></button>`;
+  }
+  document.documentElement.style.setProperty("--hdr", $("#hdr").offsetHeight + "px");
+}
+
+function renderSide(route, activeKey) {
+  const q = $("#search").value.trim().toLowerCase();
+  const list = entries(route);
+  const groups = [];
+  for (const e of list) {
+    let g = groups[groups.length - 1];
+    if (!g || g.slug !== e.secSlug) groups.push(g = {name: e.secName, slug: e.secSlug, items: []});
+    g.items.push(e);
+  }
+  const ckey = route.site + (route.list || "");
+  let html = "";
+  for (const g of groups) {
+    const items = g.items.filter(e => !q || e.label.toLowerCase().includes(q) || String(e.num || "") === q || String(e.num || "").startsWith(q));
+    if (q && !items.length) continue;
+    const done = g.items.filter(e => solved[e.key]).length;
+    const isCol = !q && collapsed[ckey + g.slug];
+    html += `<div class="sec ${isCol ? "collapsed" : ""}" data-sec="${g.slug}">
+      <button class="sec-h" data-col="${ckey + g.slug}"><span>${esc(g.name)}</span><span class="count">${done}/${g.items.length}</span></button>
+      <div class="items">${items.map(e => `<a class="item ${e.key === activeKey ? "active" : ""}" href="${e.href}">
+        ${e.num ? `<span class="num">${e.num}</span>` : ""}<span class="t">${esc(e.label)}</span>
+        ${e.diff ? `<span class="dot ${e.diff}" title="${e.diff}"></span>` : ""}<span class="check">${solved[e.key] ? "✓" : ""}</span></a>`).join("")}</div></div>`;
+  }
+  $("#side").innerHTML = html || `<div class="empty">No problem matches “${esc(q)}”.</div>`;
+  const act = $("#side .item.active");
+  if (act && !renderSide.scrolled) { act.scrollIntoView({block: "center"}); renderSide.scrolled = true; }
+}
+
+function addCopyButtons(root) {
+  root.querySelectorAll(".hl, pre:not(.hl pre)").forEach(block => {
+    if (block.parentElement.classList.contains("codewrap")) return;
+    const w = document.createElement("div"); w.className = "codewrap";
+    block.parentNode.insertBefore(w, block); w.appendChild(block);
+    const b = document.createElement("button"); b.className = "copy"; b.textContent = "Copy";
+    b.onclick = () => {
+      const text = block.querySelector("pre") ? block.querySelector("pre").innerText : block.innerText;
+      const ok = () => { b.textContent = "Copied"; b.classList.add("done"); setTimeout(() => { b.textContent = "Copy"; b.classList.remove("done"); }, 1400); };
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, () => fallback(text, ok));
+      else fallback(text, ok);
+    };
+    w.appendChild(b);
+  });
+}
+function fallback(text, ok) {
+  const ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand("copy"); ok(); } catch (e) {}
+  ta.remove();
+}
+
+function renderHome(route) {
+  const list = entries(route);
+  const groups = {};
+  for (const e of list) (groups[e.secSlug] = groups[e.secSlug] || {name: e.secName, items: []}).items.push(e);
+  const done = list.filter(e => solved[e.key]).length;
+  const title = route.site === "lc" ? DATA.leetcode.lists[route.list].name : "HackerRank · Python";
+  const sub = route.site === "lc"
+    ? `${list.length} problems in ${Object.keys(groups).length} sections. Every problem has the idea, the steps, copy-ready Python code, complexity and the common mistakes.`
+    : `All ${list.length} challenges of the Python domain, grouped by subdomain. Every code block is a complete program you can paste into HackerRank.`;
+  $("#view").innerHTML = `<div class="hero"><h1>${esc(title)}</h1><p>${sub}</p><p>${done} of ${list.length} marked solved.</p></div>
+    <div class="grid">${Object.values(groups).map(g => {
+      const d = g.items.filter(e => solved[e.key]).length;
+      return `<a class="tile" href="${g.items[0].href}"><b>${esc(g.name)}</b><span>${g.items.length} problems · ${d} solved</span>
+        <div class="progress"><i style="width:${Math.round(100 * d / g.items.length)}%"></i></div></a>`;
+    }).join("")}</div>`;
+}
+
+function renderProblem(route, e, list) {
+  const idx = list.findIndex(x => x.key === e.key);
+  const prev = list[idx - 1], next = list[idx + 1];
+  let title, badges = "", link, prob, sol;
+  if (route.site === "lc") {
+    const p = DATA.leetcode.problems[e.id];
+    title = `${p.num}. ${p.title}`;
+    badges = `<span class="badge ${p.difficulty}">${p.difficulty}</span>` +
+      p.lists.map(k => `<span class="badge list">${esc(DATA.leetcode.lists[k].name)}</span>`).join("");
+    link = `https://leetcode.com/problems/${p.slug}/`;
+    prob = p.problem; sol = p.solution;
+  } else {
+    title = e.p.title; badges = `<span class="badge list">Python · ${esc(e.secName)}</span>`;
+    link = e.p.url || "https://www.hackerrank.com/domains/python";
+    prob = e.p.problem; sol = e.p.solution;
+  }
+  const isSolved = !!solved[e.key];
+  $("#view").innerHTML = `
+    <div class="crumbs">${esc(route.site === "lc" ? DATA.leetcode.lists[route.list].name : "HackerRank Python")} › ${esc(e.secName)} · ${idx + 1} of ${list.length}</div>
+    <h1>${esc(title)}</h1>
+    <div class="meta">${badges}<a class="badge list" href="${link}" target="_blank" rel="noopener">Open online ↗</a>
+      <button class="toggle solved-btn ${isSolved ? "on" : ""}" id="solvedBtn">${isSolved ? "✓ Solved" : "Mark solved"}</button></div>
+    <div class="card content"><h2>Problem</h2>${prob}</div>
+    <div class="card content" id="solCard"><h2>Solution</h2>${practice
+      ? `<div class="reveal"><div>Practice mode is on. Try it yourself first.</div><button id="revealBtn">Show solution</button></div><div class="hidden" id="solBody">${sol}</div>`
+      : sol}</div>
+    <div class="pager">${prev ? `<a href="${prev.href}"><small>← Previous</small>${esc(prev.num ? prev.num + ". " : "")}${esc(prev.label)}</a>` : "<span></span>"}
+      ${next ? `<a class="next" href="${next.href}"><small>Next →</small>${esc(next.num ? next.num + ". " : "")}${esc(next.label)}</a>` : "<span></span>"}</div>`;
+  addCopyButtons($("#view"));
+  const rb = $("#revealBtn");
+  if (rb) rb.onclick = () => { $("#solBody").classList.remove("hidden"); rb.parentElement.remove(); };
+  $("#solvedBtn").onclick = () => {
+    if (solved[e.key]) delete solved[e.key]; else solved[e.key] = 1;
+    store.set("solved", solved); render();
+  };
+}
+
+function render() {
+  const route = parseHash();
+  renderHeader(route);
+  const list = entries(route);
+  let e = null;
+  if (route.site === "lc" && route.prob) e = list.find(x => x.num === route.prob);
+  if (route.site === "hr" && route.prob) e = list.find(x => x.secSlug === route.sec && x.p.slug === route.prob);
+  renderSide(route, e ? e.key : null);
+  if (e) renderProblem(route, e, list); else renderHome(route);
+  $("#side").classList.remove("open");
+}
+
+window.addEventListener("hashchange", () => { renderSide.scrolled = false; render(); window.scrollTo(0, 0); });
+document.addEventListener("click", ev => {
+  const side = $("#side");
+  if (side.classList.contains("open") && !ev.target.closest("#side") && !ev.target.closest("#menuBtn")) side.classList.remove("open");
+  const t = ev.target.closest(".tab");
+  if (t) { location.hash = t.dataset.site === "hr" ? "#hr" : "#lc/" + (parseHash().list || "top150"); return; }
+  const s = ev.target.closest(".subtab[data-list]");
+  if (s) { location.hash = "#lc/" + s.dataset.list; return; }
+  const h = ev.target.closest(".sec-h");
+  if (h) { const k = h.dataset.col; collapsed[k] = !collapsed[k]; store.set("collapsed", collapsed); h.parentElement.classList.toggle("collapsed"); }
+});
+$("#search").addEventListener("input", () => { const r = parseHash(); renderSide(r, null); const a = $(`#side .item[href="${location.hash}"]`); if (a) a.classList.add("active"); });
+$("#themeBtn").onclick = () => { theme = theme === "dark" ? "light" : "dark"; store.set("theme", theme); applyTheme(); };
+$("#practiceBtn").onclick = () => { practice = !practice; store.set("practice", practice); applyPractice(); render(); };
+$("#menuBtn").onclick = () => $("#side").classList.toggle("open");
+window.addEventListener("resize", () => document.documentElement.style.setProperty("--hdr", $("#hdr").offsetHeight + "px"));
+
+applyTheme(); applyPractice(); render();
+</script>
+</body>
+</html>
