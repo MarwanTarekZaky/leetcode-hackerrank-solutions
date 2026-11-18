@@ -86,3 +86,28 @@ xml-1-find-the-score xml2-find-the-maximum-depth standardize-mobile-number-using
 np-arrays np-shape-reshape np-transpose-and-flatten np-concatenate np-zeros-and-ones np-eye-and-identity np-array-mathematics floor-ceil-and-rint np-sum-and-prod np-min-and-max np-mean-var-and-std np-dot-and-cross np-inner-and-outer np-polynomials np-linear-algebra
 words-score default-arguments""".split()
 assert len(HR_SLUGS) == 115
+
+# SOLID principles and the 23 Gang of Four patterns, in study order.
+DESIGN = [
+    ("SOLID Principles", ["Single Responsibility Principle", "Open/Closed Principle", "Liskov Substitution Principle",
+                          "Interface Segregation Principle", "Dependency Inversion Principle"]),
+    ("Creational Patterns", ["Singleton", "Factory Method", "Abstract Factory", "Builder", "Prototype"]),
+    ("Structural Patterns", ["Adapter", "Bridge", "Composite", "Decorator", "Facade", "Flyweight", "Proxy"]),
+    ("Behavioral Patterns", ["Chain of Responsibility", "Command", "Interpreter", "Iterator", "Mediator", "Memento",
+                             "Observer", "State", "Strategy", "Template Method", "Visitor"]),
+]
+assert sum(len(v) for _, v in DESIGN) == 28
+
+_WIKI = "https://en.wikipedia.org/wiki/"
+_GURU = "https://refactoring.guru/design-patterns/"
+DESIGN_URLS = {
+    "Single Responsibility Principle": _WIKI + "Single-responsibility_principle",
+    "Open/Closed Principle": _WIKI + "Open%E2%80%93closed_principle",
+    "Liskov Substitution Principle": _WIKI + "Liskov_substitution_principle",
+    "Interface Segregation Principle": _WIKI + "Interface_segregation_principle",
+    "Dependency Inversion Principle": _WIKI + "Dependency_inversion_principle",
+    "Interpreter": _WIKI + "Interpreter_pattern",
+}
+for _, _names in DESIGN:
+    for _n in _names:
+        DESIGN_URLS.setdefault(_n, _GURU + _n.lower().replace(" ", "-"))

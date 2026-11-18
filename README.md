@@ -1,6 +1,6 @@
 # LeetCode & HackerRank Python Solutions
 
-**Explained Python solutions for LeetCode Top Interview 150, LeetCode Top 100 Liked, and the full HackerRank Python domain.** Every answer covers the idea, numbered steps, copy-ready code, complexity and common mistakes, and every solution is tested.
+**Explained Python solutions for LeetCode Top Interview 150, LeetCode Top 100 Liked, the full HackerRank Python domain, and the SOLID principles + all 23 design patterns.** Every answer covers the idea, numbered steps, copy-ready code, complexity and common mistakes, and every solution is tested.
 
 ### 👉 [Open the study site](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/)
 
@@ -15,8 +15,9 @@ Works in any browser, on phone or desktop. It also works **offline**: download `
 | LeetCode **Top Interview 150** | 150 (40 easy · 92 medium · 18 hard) | 23, in LeetCode's study-plan order: Array / String, Two Pointers, Sliding Window, … Multidimensional DP |
 | LeetCode **Top 100 Liked** | 100 (20 easy · 68 medium · 12 hard) | 15: Hashing, Two Pointers, Sliding Window, … Dynamic Programming |
 | HackerRank **Python domain** | 115 | 17 subdomains: Introduction, Basic Data Types, Strings, Sets, … Numpy, Debugging |
+| **SOLID & Design Patterns** | 28 (5 principles + 23 Gang of Four patterns) | 4: SOLID Principles, Creational, Structural, Behavioral |
 
-67 problems appear in both LeetCode lists, so the site has **183 LeetCode problems + 115 HackerRank challenges**.
+67 problems appear in both LeetCode lists, so the site has **183 LeetCode problems + 115 HackerRank challenges + 28 design topics**.
 
 Every problem page has:
 
@@ -28,9 +29,11 @@ Every problem page has:
 - **Watch out**: the edge cases and mistakes that make people fail hidden tests.
 - An **alternative solution** for many problems.
 
+Design pages follow the same layout, but each one starts from a **design problem** (smelly code to fix), replaces Complexity with **When to use**, often shows the Pythonic alternative, and links to a reference with **Read more ↗**.
+
 ## Features
 
-- **Two tabs**: LeetCode (with *Top Interview 150* / *Top 100 Liked*) and HackerRank, organised by section.
+- **Three tabs**: LeetCode (with *Top Interview 150* / *Top 100 Liked*), HackerRank, and Design (SOLID + design patterns), organised by section.
 - **Practice mode** hides every solution until you click *Show solution*, so you can try first.
 - **Mark solved** puts a ✓ in the sidebar and shows your progress on each section. It's saved in your browser.
 - **Search** by problem name or number.
@@ -44,7 +47,7 @@ Every problem page has:
 
 ## Tested
 
-Every LeetCode solution runs against the official examples plus extra edge cases. Every HackerRank program runs on the sample input and its output is compared with the expected output.
+Every LeetCode solution runs against the official examples plus extra edge cases. Every HackerRank program runs on the sample input and its output is compared with the expected output. Every design pattern runs its demo (output compared with the expected output) and then its own tests.
 
 ```bash
 pip install -r requirements.txt
@@ -54,6 +57,7 @@ python3 build.py --test
 ```
 LeetCode test blocks run: 184
 HackerRank samples run: 115
+Design test blocks run: 28
 ALL TESTS PASSED
 ```
 
@@ -64,14 +68,15 @@ ALL TESTS PASSED
 | `index.html` | The whole site, built from the sources. This is what GitHub Pages serves. |
 | `sources/leetcode/*.md` | All LeetCode answers in Markdown, readable right here on GitHub |
 | `sources/hackerrank/*.md` | All HackerRank answers in Markdown, grouped by subdomain |
-| `lists.py` | The official problem lists, section order and URL slugs |
+| `sources/design/*.md` | SOLID principles and design patterns in Markdown, grouped by category |
+| `lists.py` | The official problem lists, the design topic list, section order and URL slugs |
 | `build.py` | Turns the Markdown into `index.html` and runs the tests (`--test`) |
 | `template.html` | The page layout, styles and script |
 | `docs/` | Screenshots for this README |
 
 ### Fixing or improving an answer
 
-1. Edit the problem in `sources/…/*.md`. Each LeetCode problem starts with `### <number>. <title>`; each HackerRank one with `### <name>` under its `## <subdomain>`.
+1. Edit the problem in `sources/…/*.md`. Each LeetCode problem starts with `### <number>. <title>`; each HackerRank or design one with `### <name>` under its `## <subdomain>` / `## <category>`.
 2. Run `python3 build.py --test`. It checks every solution and rebuilds `index.html`.
 3. Commit both the `.md` file and `index.html`.
 
@@ -739,6 +744,59 @@ Each title opens the explained solution on the study site; the link on the right
 |---|---|
 | [Words Score](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#hr/debugging/words-score) | [HackerRank](https://www.hackerrank.com/challenges/words-score/problem) |
 | [Default Arguments](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#hr/debugging/default-arguments) | [HackerRank](https://www.hackerrank.com/challenges/default-arguments/problem) |
+
+</details>
+
+<details>
+<summary><b>SOLID & Design Patterns</b> (28 topics)</summary>
+
+**SOLID Principles** (5)
+
+| Topic | Links |
+|---|---|
+| [Single Responsibility Principle](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/solid-principles/single-responsibility-principle) | [Wikipedia](https://en.wikipedia.org/wiki/Single-responsibility_principle) |
+| [Open/Closed Principle](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/solid-principles/open-closed-principle) | [Wikipedia](https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle) |
+| [Liskov Substitution Principle](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/solid-principles/liskov-substitution-principle) | [Wikipedia](https://en.wikipedia.org/wiki/Liskov_substitution_principle) |
+| [Interface Segregation Principle](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/solid-principles/interface-segregation-principle) | [Wikipedia](https://en.wikipedia.org/wiki/Interface_segregation_principle) |
+| [Dependency Inversion Principle](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/solid-principles/dependency-inversion-principle) | [Wikipedia](https://en.wikipedia.org/wiki/Dependency_inversion_principle) |
+
+**Creational Patterns** (5)
+
+| Topic | Links |
+|---|---|
+| [Singleton](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/creational-patterns/singleton) | [Refactoring.Guru](https://refactoring.guru/design-patterns/singleton) |
+| [Factory Method](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/creational-patterns/factory-method) | [Refactoring.Guru](https://refactoring.guru/design-patterns/factory-method) |
+| [Abstract Factory](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/creational-patterns/abstract-factory) | [Refactoring.Guru](https://refactoring.guru/design-patterns/abstract-factory) |
+| [Builder](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/creational-patterns/builder) | [Refactoring.Guru](https://refactoring.guru/design-patterns/builder) |
+| [Prototype](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/creational-patterns/prototype) | [Refactoring.Guru](https://refactoring.guru/design-patterns/prototype) |
+
+**Structural Patterns** (7)
+
+| Topic | Links |
+|---|---|
+| [Adapter](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/structural-patterns/adapter) | [Refactoring.Guru](https://refactoring.guru/design-patterns/adapter) |
+| [Bridge](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/structural-patterns/bridge) | [Refactoring.Guru](https://refactoring.guru/design-patterns/bridge) |
+| [Composite](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/structural-patterns/composite) | [Refactoring.Guru](https://refactoring.guru/design-patterns/composite) |
+| [Decorator](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/structural-patterns/decorator) | [Refactoring.Guru](https://refactoring.guru/design-patterns/decorator) |
+| [Facade](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/structural-patterns/facade) | [Refactoring.Guru](https://refactoring.guru/design-patterns/facade) |
+| [Flyweight](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/structural-patterns/flyweight) | [Refactoring.Guru](https://refactoring.guru/design-patterns/flyweight) |
+| [Proxy](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/structural-patterns/proxy) | [Refactoring.Guru](https://refactoring.guru/design-patterns/proxy) |
+
+**Behavioral Patterns** (11)
+
+| Topic | Links |
+|---|---|
+| [Chain of Responsibility](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/behavioral-patterns/chain-of-responsibility) | [Refactoring.Guru](https://refactoring.guru/design-patterns/chain-of-responsibility) |
+| [Command](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/behavioral-patterns/command) | [Refactoring.Guru](https://refactoring.guru/design-patterns/command) |
+| [Interpreter](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/behavioral-patterns/interpreter) | [Wikipedia](https://en.wikipedia.org/wiki/Interpreter_pattern) |
+| [Iterator](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/behavioral-patterns/iterator) | [Refactoring.Guru](https://refactoring.guru/design-patterns/iterator) |
+| [Mediator](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/behavioral-patterns/mediator) | [Refactoring.Guru](https://refactoring.guru/design-patterns/mediator) |
+| [Memento](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/behavioral-patterns/memento) | [Refactoring.Guru](https://refactoring.guru/design-patterns/memento) |
+| [Observer](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/behavioral-patterns/observer) | [Refactoring.Guru](https://refactoring.guru/design-patterns/observer) |
+| [State](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/behavioral-patterns/state) | [Refactoring.Guru](https://refactoring.guru/design-patterns/state) |
+| [Strategy](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/behavioral-patterns/strategy) | [Refactoring.Guru](https://refactoring.guru/design-patterns/strategy) |
+| [Template Method](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/behavioral-patterns/template-method) | [Refactoring.Guru](https://refactoring.guru/design-patterns/template-method) |
+| [Visitor](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#dp/behavioral-patterns/visitor) | [Refactoring.Guru](https://refactoring.guru/design-patterns/visitor) |
 
 </details>
 

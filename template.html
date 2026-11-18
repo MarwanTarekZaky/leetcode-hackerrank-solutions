@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LeetCode &amp; HackerRank Python Solutions</title>
-<meta name="description" content="Explained Python solutions for LeetCode Top Interview 150, Top 100 Liked and the HackerRank Python domain: idea, steps, code, complexity and pitfalls.">
+<meta name="description" content="Explained Python solutions for LeetCode Top Interview 150, Top 100 Liked, the HackerRank Python domain, SOLID principles and the 23 design patterns: idea, steps, code, complexity and pitfalls.">
 <style>
 :root {
   --bg: #f6f5f1; --panel: #ffffff; --panel-2: #fbfaf7; --text: #1d1c1a; --muted: #6b6860;
@@ -132,6 +132,7 @@ h1 { font-size: 26px; line-height: 1.25; margin: 0 0 10px; letter-spacing: -.015
     <div class="tabs" role="tablist">
       <button class="tab" data-site="lc">LeetCode</button>
       <button class="tab" data-site="hr">HackerRank</button>
+      <button class="tab" data-site="dp">Design</button>
     </div>
     <div class="spacer"></div>
     <input class="search" id="search" type="search" placeholder="Search problems (name or number)…">
@@ -148,6 +149,15 @@ h1 { font-size: 26px; line-height: 1.25; margin: 0 0 10px; letter-spacing: -.015
 
 <script>
 const DATA = __DATA__;
+// sites organised as sections of named problems (no numbers / difficulty)
+const SECTIONED = {
+  hr: {data: DATA.hackerrank, tab: "Python domain", crumb: "HackerRank Python", home: "HackerRank · Python", link: "Open online ↗",
+       badge: s => "Python · " + s,
+       sub: n => `All ${n} challenges of the Python domain, grouped by subdomain. Every code block is a complete program you can paste into HackerRank.`},
+  dp: {data: DATA.design, tab: "SOLID & Design Patterns", crumb: "Design", home: "SOLID & Design Patterns in Python", link: "Read more ↗",
+       badge: s => s,
+       sub: n => `${n} topics: the 5 SOLID principles and the 23 Gang of Four patterns. Each one starts from a design problem, then gives the idea, the steps, tested Python code, when to use it and the common mistakes.`},
+};
 const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
@@ -166,10 +176,10 @@ function applyTheme() {
 }
 function applyPractice() { $("#practiceBtn").classList.toggle("on", practice); }
 
-// ---------- routing: #lc/top150/88  #lc/top100  #hr/strings/capitalize
+// ---------- routing: #lc/top150/88  #lc/top100  #hr/strings/capitalize  #dp/creational-patterns/singleton
 function parseHash() {
   const p = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
-  if (p[0] === "hr") return {site: "hr", sec: p[1] || null, prob: p[2] || null};
+  if (SECTIONED[p[0]]) return {site: p[0], sec: p[1] || null, prob: p[2] || null};
   return {site: "lc", list: (p[1] === "top100" ? "top100" : "top150"), prob: p[2] ? Number(p[2]) : null};
 }
 
@@ -183,8 +193,9 @@ function entries(route) {
       out.push({key: "lc:" + id, href: `#lc/${route.list}/${id}`, label: p.title, num: id, diff: p.difficulty, secName: s.name, secSlug: s.slug, id});
     }
   } else {
-    for (const s of DATA.hackerrank.sections) for (const p of s.problems)
-      out.push({key: "hr:" + s.slug + "/" + p.slug, href: `#hr/${s.slug}/${p.slug}`, label: p.title, secName: s.name, secSlug: s.slug, p});
+    const site = route.site;
+    for (const s of SECTIONED[site].data.sections) for (const p of s.problems)
+      out.push({key: site + ":" + s.slug + "/" + p.slug, href: `#${site}/${s.slug}/${p.slug}`, label: p.title, secName: s.name, secSlug: s.slug, p});
   }
   return out;
 }
@@ -196,7 +207,8 @@ function renderHeader(route) {
     sb.innerHTML = Object.entries(DATA.leetcode.lists).map(([k, L]) =>
       `<button class="subtab ${route.list === k ? "active" : ""}" data-list="${k}">${esc(L.name)} <span style="opacity:.6">(${L.sections.reduce((a, s) => a + s.ids.length, 0)})</span></button>`).join("");
   } else {
-    sb.innerHTML = `<button class="subtab active">Python domain <span style="opacity:.6">(${DATA.hackerrank.sections.reduce((a, s) => a + s.problems.length, 0)})</span></button>`;
+    const S = SECTIONED[route.site];
+    sb.innerHTML = `<button class="subtab active">${esc(S.tab)} <span style="opacity:.6">(${S.data.sections.reduce((a, s) => a + s.problems.length, 0)})</span></button>`;
   }
   document.documentElement.style.setProperty("--hdr", $("#hdr").offsetHeight + "px");
 }
@@ -255,10 +267,10 @@ function renderHome(route) {
   const groups = {};
   for (const e of list) (groups[e.secSlug] = groups[e.secSlug] || {name: e.secName, items: []}).items.push(e);
   const done = list.filter(e => solved[e.key]).length;
-  const title = route.site === "lc" ? DATA.leetcode.lists[route.list].name : "HackerRank · Python";
+  const title = route.site === "lc" ? DATA.leetcode.lists[route.list].name : SECTIONED[route.site].home;
   const sub = route.site === "lc"
     ? `${list.length} problems in ${Object.keys(groups).length} sections. Every problem has the idea, the steps, copy-ready Python code, complexity and the common mistakes.`
-    : `All ${list.length} challenges of the Python domain, grouped by subdomain. Every code block is a complete program you can paste into HackerRank.`;
+    : SECTIONED[route.site].sub(list.length);
   $("#view").innerHTML = `<div class="hero"><h1>${esc(title)}</h1><p>${sub}</p><p>${done} of ${list.length} marked solved.</p></div>
     <div class="grid">${Object.values(groups).map(g => {
       const d = g.items.filter(e => solved[e.key]).length;
@@ -270,7 +282,7 @@ function renderHome(route) {
 function renderProblem(route, e, list) {
   const idx = list.findIndex(x => x.key === e.key);
   const prev = list[idx - 1], next = list[idx + 1];
-  let title, badges = "", link, prob, sol;
+  let title, badges = "", link, linkText = "Open online ↗", prob, sol;
   if (route.site === "lc") {
     const p = DATA.leetcode.problems[e.id];
     title = `${p.num}. ${p.title}`;
@@ -279,15 +291,16 @@ function renderProblem(route, e, list) {
     link = `https://leetcode.com/problems/${p.slug}/`;
     prob = p.problem; sol = p.solution;
   } else {
-    title = e.p.title; badges = `<span class="badge list">Python · ${esc(e.secName)}</span>`;
-    link = e.p.url || "https://www.hackerrank.com/domains/python";
+    const S = SECTIONED[route.site];
+    title = e.p.title; badges = `<span class="badge list">${esc(S.badge(e.secName))}</span>`;
+    link = e.p.url; linkText = S.link;
     prob = e.p.problem; sol = e.p.solution;
   }
   const isSolved = !!solved[e.key];
   $("#view").innerHTML = `
-    <div class="crumbs">${esc(route.site === "lc" ? DATA.leetcode.lists[route.list].name : "HackerRank Python")} › ${esc(e.secName)} · ${idx + 1} of ${list.length}</div>
+    <div class="crumbs">${esc(route.site === "lc" ? DATA.leetcode.lists[route.list].name : SECTIONED[route.site].crumb)} › ${esc(e.secName)} · ${idx + 1} of ${list.length}</div>
     <h1>${esc(title)}</h1>
-    <div class="meta">${badges}<a class="badge list" href="${link}" target="_blank" rel="noopener">Open online ↗</a>
+    <div class="meta">${badges}<a class="badge list" href="${link}" target="_blank" rel="noopener">${linkText}</a>
       <button class="toggle solved-btn ${isSolved ? "on" : ""}" id="solvedBtn">${isSolved ? "✓ Solved" : "Mark solved"}</button></div>
     <div class="card content"><h2>Problem</h2>${prob}</div>
     <div class="card content" id="solCard"><h2>Solution</h2>${practice
@@ -310,7 +323,7 @@ function render() {
   const list = entries(route);
   let e = null;
   if (route.site === "lc" && route.prob) e = list.find(x => x.num === route.prob);
-  if (route.site === "hr" && route.prob) e = list.find(x => x.secSlug === route.sec && x.p.slug === route.prob);
+  if (route.site !== "lc" && route.prob) e = list.find(x => x.secSlug === route.sec && x.p.slug === route.prob);
   renderSide(route, e ? e.key : null);
   if (e) renderProblem(route, e, list); else renderHome(route);
   $("#side").classList.remove("open");
@@ -321,7 +334,7 @@ document.addEventListener("click", ev => {
   const side = $("#side");
   if (side.classList.contains("open") && !ev.target.closest("#side") && !ev.target.closest("#menuBtn")) side.classList.remove("open");
   const t = ev.target.closest(".tab");
-  if (t) { location.hash = t.dataset.site === "hr" ? "#hr" : "#lc/" + (parseHash().list || "top150"); return; }
+  if (t) { location.hash = t.dataset.site === "lc" ? "#lc/" + (parseHash().list || "top150") : "#" + t.dataset.site; return; }
   const s = ev.target.closest(".subtab[data-list]");
   if (s) { location.hash = "#lc/" + s.dataset.list; return; }
   const h = ev.target.closest(".sec-h");

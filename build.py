@@ -21,11 +21,17 @@ HackerRank (sources/hackerrank/*.md):
     <markdown body>
     ```stdin / ```stdout   (optional sample, hidden, run with --test)
 
+Design (sources/design/*.md): same layout as HackerRank (## Section / ### Name).
+    The ```python block runs as __main__ and its output must match the hidden ```stdout;
+    then, in a fresh namespace, the ```test blocks run against it.
+
 ```python blocks are complete programs (executed in tests); ```py blocks are snippets.
 The solution part of a problem starts at the first line beginning with **Idea
 (everything before it is the problem description, shown in practice mode).
 """
+import contextlib
 import html
+import io
 import json
 import os
 import re
@@ -37,7 +43,7 @@ from pathlib import Path
 import markdown
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lists import TOP_150, TOP_100_LIKED, HACKERRANK_PYTHON, LC_SLUG_OVERRIDES, HR_SLUGS  # noqa: E402
+from lists import TOP_150, TOP_100_LIKED, HACKERRANK_PYTHON, LC_SLUG_OVERRIDES, HR_SLUGS, DESIGN, DESIGN_URLS  # noqa: E402
 
 ROOT = Path(__file__).parent
 SRC = ROOT / "sources"
@@ -135,9 +141,9 @@ def parse_leetcode():
     return problems
 
 
-def parse_hackerrank():
+def parse_sections(folder):
     sections = {}
-    for f in sorted((SRC / "hackerrank").glob("*.md")):
+    for f in sorted((SRC / folder).glob("*.md")):
         text = f.read_text()
         for sec in re.split(r"^## ", text, flags=re.M)[1:]:
             name, rest = sec.split("\n", 1)
@@ -147,8 +153,18 @@ def parse_hackerrank():
             for i in range(1, len(parts), 2):
                 title, body = parts[i].strip(), parts[i + 1]
                 visible, hidden = split_hidden(body)
+                if title in items:
+                    raise SystemExit(f"duplicate {folder} entry {name} / {title} ({f.name})")
                 items[title] = {"title": title, "body": visible, "hidden": hidden, "file": f.name}
     return sections
+
+
+def parse_hackerrank():
+    return parse_sections("hackerrank")
+
+
+def parse_design():
+    return parse_sections("design")
 
 
 # ---------------------------------------------------------------- tests
@@ -312,7 +328,63 @@ def run_hackerrank_tests(sections):
     return ran, failures
 
 
+def run_design_tests(sections):
+    failures = []
+    ran = 0
+    for sec, items in sections.items():
+        for title, p in items.items():
+            name = f"DP {sec} / {title}"
+            blocks = [c for lang, c in code_blocks(p["body"]) if lang == "python"]
+            if len(blocks) != 1:
+                failures.append(f"{name}: expected exactly one ```python block, found {len(blocks)}")
+                continue
+            code = compile(blocks[0], title, "exec")
+            out = io.StringIO()
+            try:
+                with contextlib.redirect_stdout(out):
+                    exec(code, {"__name__": "__main__"})
+            except Exception as e:
+                failures.append(f"{name}: demo error {type(e).__name__}: {e}")
+                continue
+            expected = p["hidden"]["stdout"]
+            if expected is None:
+                failures.append(f"{name}: (warning) no stdout")
+            elif norm(out.getvalue()) != norm(expected):
+                failures.append(f"{name}: demo output mismatch\n--- expected\n{expected}\n--- got\n{out.getvalue()}")
+            if not p["hidden"]["test"]:
+                failures.append(f"{name}: (warning) no tests")
+            g = {"__name__": "dp_test"}
+            exec(code, g)
+            for t in p["hidden"]["test"]:
+                try:
+                    exec(compile(t, f"{title}-test", "exec"), g)
+                    ran += 1
+                except AssertionError as e:
+                    failures.append(f"{name}: assertion failed {e}")
+                except Exception as e:
+                    failures.append(f"{name}: test error {type(e).__name__}: {e}")
+    return ran, failures
+
+
 # ---------------------------------------------------------------- site data
+
+def build_design(dp):
+    sections, missing = [], []
+    for sec, names in DESIGN:
+        items = dp.get(sec, {})
+        probs = []
+        for n in names:
+            p = items.get(n)
+            if p is None:
+                missing.append(f"{sec} / {n}")
+                continue
+            prob, sol = render(p["body"])
+            probs.append({"title": n, "slug": slugify(n), "url": DESIGN_URLS[n], "problem": prob, "solution": sol})
+        sections.append({"name": sec, "slug": slugify(sec), "problems": probs})
+    extra = [f"{s} / {t}" for s, items in dp.items() for t in items
+             if not any(s == sec and t in names for sec, names in DESIGN)]
+    return {"name": "SOLID & Design Patterns", "sections": sections}, missing, extra
+
 
 def build_data(lc, hr):
     in_lists = {}
@@ -367,7 +439,9 @@ def build_data(lc, hr):
 def main():
     lc = parse_leetcode()
     hr = parse_hackerrank()
+    dp = parse_design()
     data, missing, extra, hr_missing, hr_extra = build_data(lc, hr)
+    data["design"], dp_missing, dp_extra = build_design(dp)
 
     print(f"LeetCode problems written: {len(lc)} (needed {len(lc) + len(missing) - len(extra)})")
     print(f"HackerRank problems written: {sum(len(s['problems']) for s in data['hackerrank']['sections'])} / 115")
@@ -379,14 +453,23 @@ def main():
         print("HackerRank missing:", hr_missing)
     if hr_extra:
         print("HackerRank names not matched to the list:", hr_extra)
+    total_dp = sum(len(v) for _, v in DESIGN)
+    print(f"Design topics written: {sum(len(s['problems']) for s in data['design']['sections'])} / {total_dp}")
+    if dp_missing:
+        print("Design missing:", dp_missing)
+    if dp_extra:
+        print("Design names not matched to the list:", dp_extra)
 
     if "--test" in sys.argv:
         ran, fails = run_leetcode_tests(lc)
         print(f"\nLeetCode test blocks run: {ran}")
         ran2, fails2 = run_hackerrank_tests(hr)
         print(f"HackerRank samples run: {ran2}")
-        real = [f for f in fails + fails2 if "(warning)" not in f]
-        warns = [f for f in fails + fails2 if "(warning)" in f]
+        ran3, fails3 = run_design_tests(dp)
+        print(f"Design test blocks run: {ran3}")
+        fails = fails + fails2 + fails3
+        real = [f for f in fails if "(warning)" not in f]
+        warns = [f for f in fails if "(warning)" in f]
         for f in real:
             print("FAIL:", f)
         if warns:
