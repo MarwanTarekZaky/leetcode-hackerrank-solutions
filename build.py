@@ -43,7 +43,13 @@ from pathlib import Path
 import markdown
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lists import TOP_150, TOP_100_LIKED, HACKERRANK_PYTHON, LC_SLUG_OVERRIDES, HR_SLUGS, DESIGN, DESIGN_URLS  # noqa: E402
+from lists import (TOP_150, TOP_100_LIKED, LC_75, HACKERRANK_PYTHON, LC_SLUG_OVERRIDES, HR_SLUGS,  # noqa: E402
+                   HR_ALGORITHMS, HR_DATA_STRUCTURES, DESIGN, DESIGN_URLS)
+
+LC_LISTS = [("top150", "Top Interview 150", TOP_150), ("top100", "Top 100 Liked", TOP_100_LIKED), ("lc75", "LeetCode 75", LC_75)]
+# (list key, display name, source folder, chapter list)
+HR_TRACKS = [("algorithms", "Algorithms", "hackerrank-algorithms", HR_ALGORITHMS),
+             ("data-structures", "Data Structures", "hackerrank-data-structures", HR_DATA_STRUCTURES)]
 
 ROOT = Path(__file__).parent
 SRC = ROOT / "sources"
@@ -386,9 +392,27 @@ def build_design(dp):
     return {"name": "SOLID & Design Patterns", "sections": sections}, missing, extra
 
 
+def build_hr_track(name, parsed, chapters):
+    """Every challenge of the track is listed; unwritten ones are flagged `soon`."""
+    sections, written = [], 0
+    for chapter, challenges in chapters:
+        items = parsed.get(chapter, {})
+        probs = []
+        for title, slug, difficulty in challenges:
+            p = items.get(title)
+            prob, sol = render(p["body"]) if p else ("", "")
+            written += bool(p)
+            probs.append({"title": title, "slug": slug, "difficulty": difficulty, "soon": not p,
+                          "url": f"https://www.hackerrank.com/challenges/{slug}/problem", "problem": prob, "solution": sol})
+        sections.append({"name": chapter, "slug": slugify(chapter), "problems": probs})
+    extra = [f"{s} / {t}" for s, items in parsed.items() for t in items
+             if not any(s == ch and any(t == c[0] for c in cs) for ch, cs in chapters)]
+    return {"name": name, "sections": sections}, written, extra
+
+
 def build_data(lc, hr):
     in_lists = {}
-    for key, lst in (("top150", TOP_150), ("top100", TOP_100_LIKED)):
+    for key, _, lst in LC_LISTS:
         for _, ids in lst:
             for i in ids:
                 in_lists.setdefault(i, []).append(key)
@@ -425,13 +449,11 @@ def build_data(lc, hr):
 
     data = {
         "leetcode": {
-            "lists": {
-                "top150": {"name": "Top Interview 150", "sections": [{"name": n, "slug": slugify(n), "ids": ids} for n, ids in TOP_150]},
-                "top100": {"name": "Top 100 Liked", "sections": [{"name": n, "slug": slugify(n), "ids": ids} for n, ids in TOP_100_LIKED]},
-            },
+            "lists": {key: {"name": name, "sections": [{"name": n, "slug": slugify(n), "ids": ids} for n, ids in lst]}
+                      for key, name, lst in LC_LISTS},
             "problems": lc_out,
         },
-        "hackerrank": {"name": "Python", "sections": hr_sections},
+        "hackerrank": {"lists": {"python": {"name": "Python", "sections": hr_sections}}},
     }
     return data, missing, extra, hr_missing, hr_extra
 
@@ -442,9 +464,18 @@ def main():
     dp = parse_design()
     data, missing, extra, hr_missing, hr_extra = build_data(lc, hr)
     data["design"], dp_missing, dp_extra = build_design(dp)
+    tracks = {key: parse_sections(folder) for key, _, folder, _ in HR_TRACKS}
+    track_report = []
+    for key, name, folder, chapters in HR_TRACKS:
+        data["hackerrank"]["lists"][key], written, track_extra = build_hr_track(name, tracks[key], chapters)
+        track_report.append((name, written, sum(len(c) for _, c in chapters), track_extra))
 
     print(f"LeetCode problems written: {len(lc)} (needed {len(lc) + len(missing) - len(extra)})")
-    print(f"HackerRank problems written: {sum(len(s['problems']) for s in data['hackerrank']['sections'])} / 115")
+    print(f"HackerRank problems written: {sum(len(s['problems']) for s in data['hackerrank']['lists']['python']['sections'])} / 115")
+    for name, written, total, track_extra in track_report:
+        print(f"HackerRank {name} written: {written} / {total}")
+        if track_extra:
+            print(f"HackerRank {name} names not matched to the list:", track_extra)
     if missing:
         print("LeetCode missing:", sorted(missing))
     if extra:
@@ -465,6 +496,10 @@ def main():
         print(f"\nLeetCode test blocks run: {ran}")
         ran2, fails2 = run_hackerrank_tests(hr)
         print(f"HackerRank samples run: {ran2}")
+        for key, name, _, _ in HR_TRACKS:
+            ran_t, fails_t = run_hackerrank_tests(tracks[key])
+            print(f"HackerRank {name} samples run: {ran_t}")
+            fails2 += fails_t
         ran3, fails3 = run_design_tests(dp)
         print(f"Design test blocks run: {ran3}")
         fails = fails + fails2 + fails3

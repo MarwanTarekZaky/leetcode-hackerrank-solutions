@@ -1,6 +1,6 @@
 # LeetCode & HackerRank Python Solutions
 
-**Explained Python solutions for LeetCode Top Interview 150, LeetCode Top 100 Liked, the full HackerRank Python domain, and the SOLID principles + all 23 design patterns.** Every answer covers the idea, numbered steps, copy-ready code, complexity and common mistakes, and every solution is tested.
+**Explained Python solutions for LeetCode Top Interview 150, LeetCode Top 100 Liked, LeetCode 75, the HackerRank Python, Algorithms and Data Structures domains, and the SOLID principles + all 23 design patterns.** Every answer covers the idea, numbered steps, copy-ready code, complexity and common mistakes, and every solution is tested.
 
 ### 👉 [Open the study site](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/)
 
@@ -14,10 +14,13 @@ Works in any browser, on phone or desktop. It also works **offline**: download `
 |---|---:|---|
 | LeetCode **Top Interview 150** | 150 (40 easy · 92 medium · 18 hard) | 23, in LeetCode's study-plan order: Array / String, Two Pointers, Sliding Window, … Multidimensional DP |
 | LeetCode **Top 100 Liked** | 100 (20 easy · 68 medium · 12 hard) | 15: Hashing, Two Pointers, Sliding Window, … Dynamic Programming |
+| LeetCode **75** | 75 (22 easy · 53 medium) | 22, in LeetCode's study-plan order: Array / String, Two Pointers, … Intervals, Monotonic Stack |
 | HackerRank **Python domain** | 115 | 17 subdomains: Introduction, Basic Data Types, Strings, Sets, … Numpy, Debugging |
+| HackerRank **Algorithms domain** | 442 (in progress) | 14 subdomains: Warmup, Implementation, Strings, Sorting, Search, Graph Theory, Greedy, Dynamic Programming, … Debugging |
+| HackerRank **Data Structures domain** | 121 (in progress) | 11 subdomains: Arrays, Linked Lists, Trees, Balanced Trees, Stacks, Queues, Heap, Disjoint Set, Multiple Choice, Trie, Advanced |
 | **SOLID & Design Patterns** | 28 (5 principles + 23 Gang of Four patterns) | 4: SOLID Principles, Creational, Structural, Behavioral |
 
-67 problems appear in both LeetCode lists, so the site has **183 LeetCode problems + 115 HackerRank challenges + 28 design topics**.
+Many problems appear in more than one LeetCode list, so the LeetCode tab has **234 different problems**. The HackerRank Algorithms and Data Structures domains are being written subdomain by subdomain; every challenge is already listed with its difficulty and a link, and the ones not written yet are marked *coming soon*.
 
 Every problem page has:
 
@@ -33,7 +36,7 @@ Design pages follow the same layout, but each one starts from a **design problem
 
 ## Features
 
-- **Three tabs**: LeetCode (with *Top Interview 150* / *Top 100 Liked*), HackerRank, and Design (SOLID + design patterns), organised by section.
+- **Three tabs**: LeetCode (*Top Interview 150* / *Top 100 Liked* / *LeetCode 75*), HackerRank (*Python* / *Algorithms* / *Data Structures*), and Design (SOLID + design patterns), organised by section.
 - **Practice mode** hides every solution until you click *Show solution*, so you can try first.
 - **Mark solved** puts a ✓ in the sidebar and shows your progress on each section. It's saved in your browser.
 - **Search** by problem name or number.
@@ -55,7 +58,7 @@ python3 build.py --test
 ```
 
 ```
-LeetCode test blocks run: 184
+LeetCode test blocks run: 235
 HackerRank samples run: 115
 Design test blocks run: 28
 ALL TESTS PASSED
@@ -67,9 +70,10 @@ ALL TESTS PASSED
 |---|---|
 | `index.html` | The whole site, built from the sources. This is what GitHub Pages serves. |
 | `sources/leetcode/*.md` | All LeetCode answers in Markdown, readable right here on GitHub |
-| `sources/hackerrank/*.md` | All HackerRank answers in Markdown, grouped by subdomain |
+| `sources/hackerrank/*.md` | All HackerRank Python answers in Markdown, grouped by subdomain |
+| `sources/hackerrank-algorithms/*.md`, `sources/hackerrank-data-structures/*.md` | HackerRank Algorithms and Data Structures answers, grouped by subdomain |
 | `sources/design/*.md` | SOLID principles and design patterns in Markdown, grouped by category |
-| `lists.py` | The official problem lists, the design topic list, section order and URL slugs |
+| `lists.py`, `lists_hr.py` | The official problem lists, the design topic list, section order and URL slugs |
 | `build.py` | Turns the Markdown into `index.html` and runs the tests (`--test`) |
 | `template.html` | The page layout, styles and script |
 | `docs/` | Screenshots for this README |
@@ -539,6 +543,196 @@ Each title opens the explained solution on the study site; the link on the right
 | 189 | [Rotate Array](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/top100/189) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/rotate-array/) |
 | 238 | [Product of Array Except Self](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/top100/238) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/product-of-array-except-self/) |
 | 287 | [Find the Duplicate Number](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/top100/287) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/find-the-duplicate-number/) |
+
+</details>
+
+<details>
+<summary><b>LeetCode 75</b> (75 problems)</summary>
+
+**Array / String** (9)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 1768 | [Merge Strings Alternately](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1768) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/merge-strings-alternately/) |
+| 1071 | [Greatest Common Divisor of Strings](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1071) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/greatest-common-divisor-of-strings/) |
+| 1431 | [Kids With the Greatest Number of Candies](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1431) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/kids-with-the-greatest-number-of-candies/) |
+| 605 | [Can Place Flowers](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/605) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/can-place-flowers/) |
+| 345 | [Reverse Vowels of a String](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/345) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/reverse-vowels-of-a-string/) |
+| 151 | [Reverse Words in a String](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/151) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/reverse-words-in-a-string/) |
+| 238 | [Product of Array Except Self](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/238) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/product-of-array-except-self/) |
+| 334 | [Increasing Triplet Subsequence](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/334) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/increasing-triplet-subsequence/) |
+| 443 | [String Compression](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/443) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/string-compression/) |
+
+**Two Pointers** (4)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 283 | [Move Zeroes](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/283) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/move-zeroes/) |
+| 392 | [Is Subsequence](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/392) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/is-subsequence/) |
+| 11 | [Container With Most Water](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/11) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/container-with-most-water/) |
+| 1679 | [Max Number of K-Sum Pairs](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1679) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/max-number-of-k-sum-pairs/) |
+
+**Sliding Window** (4)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 643 | [Maximum Average Subarray I](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/643) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/maximum-average-subarray-i/) |
+| 1456 | [Maximum Number of Vowels in a Substring of Given Length](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1456) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/) |
+| 1004 | [Max Consecutive Ones III](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1004) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/max-consecutive-ones-iii/) |
+| 1493 | [Longest Subarray of 1's After Deleting One Element](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1493) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/) |
+
+**Prefix Sum** (2)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 1732 | [Find the Highest Altitude](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1732) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/find-the-highest-altitude/) |
+| 724 | [Find Pivot Index](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/724) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/find-pivot-index/) |
+
+**Hash Map / Set** (4)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 2215 | [Find the Difference of Two Arrays](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/2215) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/find-the-difference-of-two-arrays/) |
+| 1207 | [Unique Number of Occurrences](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1207) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/unique-number-of-occurrences/) |
+| 1657 | [Determine if Two Strings Are Close](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1657) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/determine-if-two-strings-are-close/) |
+| 2352 | [Equal Row and Column Pairs](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/2352) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/equal-row-and-column-pairs/) |
+
+**Stack** (3)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 2390 | [Removing Stars From a String](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/2390) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/removing-stars-from-a-string/) |
+| 735 | [Asteroid Collision](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/735) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/asteroid-collision/) |
+| 394 | [Decode String](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/394) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/decode-string/) |
+
+**Queue** (2)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 933 | [Number of Recent Calls](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/933) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/number-of-recent-calls/) |
+| 649 | [Dota2 Senate](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/649) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/dota2-senate/) |
+
+**Linked List** (4)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 2095 | [Delete the Middle Node of a Linked List](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/2095) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/) |
+| 328 | [Odd Even Linked List](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/328) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/odd-even-linked-list/) |
+| 206 | [Reverse Linked List](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/206) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/reverse-linked-list/) |
+| 2130 | [Maximum Twin Sum of a Linked List](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/2130) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/maximum-twin-sum-of-a-linked-list/) |
+
+**Binary Tree - DFS** (6)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 104 | [Maximum Depth of Binary Tree](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/104) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/maximum-depth-of-binary-tree/) |
+| 872 | [Leaf-Similar Trees](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/872) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/leaf-similar-trees/) |
+| 1448 | [Count Good Nodes in Binary Tree](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1448) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) |
+| 437 | [Path Sum III](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/437) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/path-sum-iii/) |
+| 1372 | [Longest ZigZag Path in a Binary Tree](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1372) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/longest-zigzag-path-in-a-binary-tree/) |
+| 236 | [Lowest Common Ancestor of a Binary Tree](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/236) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/) |
+
+**Binary Tree - BFS** (2)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 199 | [Binary Tree Right Side View](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/199) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/binary-tree-right-side-view/) |
+| 1161 | [Maximum Level Sum of a Binary Tree](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1161) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/) |
+
+**Binary Search Tree** (2)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 700 | [Search in a Binary Search Tree](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/700) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/search-in-a-binary-search-tree/) |
+| 450 | [Delete Node in a BST](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/450) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/delete-node-in-a-bst/) |
+
+**Graphs - DFS** (4)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 841 | [Keys and Rooms](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/841) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/keys-and-rooms/) |
+| 547 | [Number of Provinces](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/547) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/number-of-provinces/) |
+| 1466 | [Reorder Routes to Make All Paths Lead to the City Zero](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1466) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/reorder-routes-to-make-all-paths-lead-to-the-city-zero/) |
+| 399 | [Evaluate Division](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/399) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/evaluate-division/) |
+
+**Graphs - BFS** (2)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 1926 | [Nearest Exit from Entrance in Maze](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1926) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/nearest-exit-from-entrance-in-maze/) |
+| 994 | [Rotting Oranges](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/994) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/rotting-oranges/) |
+
+**Heap / Priority Queue** (4)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 215 | [Kth Largest Element in an Array](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/215) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/kth-largest-element-in-an-array/) |
+| 2336 | [Smallest Number in Infinite Set](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/2336) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/smallest-number-in-infinite-set/) |
+| 2542 | [Maximum Subsequence Score](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/2542) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/maximum-subsequence-score/) |
+| 2462 | [Total Cost to Hire K Workers](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/2462) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/total-cost-to-hire-k-workers/) |
+
+**Binary Search** (4)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 374 | [Guess Number Higher or Lower](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/374) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/guess-number-higher-or-lower/) |
+| 2300 | [Successful Pairs of Spells and Potions](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/2300) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) |
+| 162 | [Find Peak Element](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/162) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/find-peak-element/) |
+| 875 | [Koko Eating Bananas](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/875) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/koko-eating-bananas/) |
+
+**Backtracking** (2)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 17 | [Letter Combinations of a Phone Number](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/17) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) |
+| 216 | [Combination Sum III](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/216) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/combination-sum-iii/) |
+
+**DP - 1D** (4)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 1137 | [N-th Tribonacci Number](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1137) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/n-th-tribonacci-number/) |
+| 746 | [Min Cost Climbing Stairs](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/746) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/min-cost-climbing-stairs/) |
+| 198 | [House Robber](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/198) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/house-robber/) |
+| 790 | [Domino and Tromino Tiling](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/790) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/domino-and-tromino-tiling/) |
+
+**DP - Multidimensional** (4)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 62 | [Unique Paths](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/62) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/unique-paths/) |
+| 1143 | [Longest Common Subsequence](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1143) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/longest-common-subsequence/) |
+| 714 | [Best Time to Buy and Sell Stock with Transaction Fee](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/714) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/) |
+| 72 | [Edit Distance](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/72) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/edit-distance/) |
+
+**Bit Manipulation** (3)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 338 | [Counting Bits](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/338) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/counting-bits/) |
+| 136 | [Single Number](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/136) | 🟢 Easy | [LeetCode](https://leetcode.com/problems/single-number/) |
+| 1318 | [Minimum Flips to Make a OR b Equal to c](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1318) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/minimum-flips-to-make-a-or-b-equal-to-c/) |
+
+**Trie** (2)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 208 | [Implement Trie (Prefix Tree)](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/208) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/implement-trie-prefix-tree/) |
+| 1268 | [Search Suggestions System](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/1268) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/search-suggestions-system/) |
+
+**Intervals** (2)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 435 | [Non-overlapping Intervals](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/435) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/non-overlapping-intervals/) |
+| 452 | [Minimum Number of Arrows to Burst Balloons](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/452) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) |
+
+**Monotonic Stack** (2)
+
+| # | Problem | Difficulty | Links |
+|---:|---|---|---|
+| 739 | [Daily Temperatures](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/739) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/daily-temperatures/) |
+| 901 | [Online Stock Span](https://marwantarekzaky.github.io/leetcode-hackerrank-solutions/#lc/lc75/901) | 🟡 Medium | [LeetCode](https://leetcode.com/problems/online-stock-span/) |
 
 </details>
 

@@ -44,6 +44,31 @@ TOP_100_LIKED = [
     ("Misc", [31, 41, 53, 56, 75, 136, 169, 189, 238, 287]),
 ]
 
+LC_75 = [
+    ("Array / String", [1768, 1071, 1431, 605, 345, 151, 238, 334, 443]),
+    ("Two Pointers", [283, 392, 11, 1679]),
+    ("Sliding Window", [643, 1456, 1004, 1493]),
+    ("Prefix Sum", [1732, 724]),
+    ("Hash Map / Set", [2215, 1207, 1657, 2352]),
+    ("Stack", [2390, 735, 394]),
+    ("Queue", [933, 649]),
+    ("Linked List", [2095, 328, 206, 2130]),
+    ("Binary Tree - DFS", [104, 872, 1448, 437, 1372, 236]),
+    ("Binary Tree - BFS", [199, 1161]),
+    ("Binary Search Tree", [700, 450]),
+    ("Graphs - DFS", [841, 547, 1466, 399]),
+    ("Graphs - BFS", [1926, 994]),
+    ("Heap / Priority Queue", [215, 2336, 2542, 2462]),
+    ("Binary Search", [374, 2300, 162, 875]),
+    ("Backtracking", [17, 216]),
+    ("DP - 1D", [1137, 746, 198, 790]),
+    ("DP - Multidimensional", [62, 1143, 714, 72]),
+    ("Bit Manipulation", [338, 136, 1318]),
+    ("Trie", [208, 1268]),
+    ("Intervals", [435, 452]),
+    ("Monotonic Stack", [739, 901]),
+]
+
 HACKERRANK_PYTHON = [
     ("Introduction", ['Say "Hello, World!" With Python', "Python If-Else", "Arithmetic Operators", "Python: Division", "Loops", "Write a function", "Print Function"]),
     ("Basic Data Types", ["List Comprehensions", "Find the Runner-Up Score!", "Nested Lists", "Finding the percentage", "Lists", "Tuples"]),
@@ -66,10 +91,12 @@ HACKERRANK_PYTHON = [
 
 assert sum(len(v) for _, v in TOP_150) == 150
 assert sum(len(v) for _, v in TOP_100_LIKED) == 100
+assert sum(len(v) for _, v in LC_75) == 75
 assert sum(len(v) for _, v in HACKERRANK_PYTHON) == 115
 
 # LeetCode URL slugs that differ from a plain slug of the title.
-LC_SLUG_OVERRIDES = {50: "powx-n", 69: "sqrtx", 118: "pascals-triangle", 380: "insert-delete-getrandom-o1"}
+LC_SLUG_OVERRIDES = {50: "powx-n", 69: "sqrtx", 118: "pascals-triangle", 380: "insert-delete-getrandom-o1",
+                     1493: "longest-subarray-of-1s-after-deleting-one-element"}
 
 # HackerRank challenge slugs, in the same order as HACKERRANK_PYTHON.
 HR_SLUGS = """py-hello-world py-if-else python-arithmetic-operators python-division python-loops write-a-function python-print
@@ -86,6 +113,8 @@ xml-1-find-the-score xml2-find-the-maximum-depth standardize-mobile-number-using
 np-arrays np-shape-reshape np-transpose-and-flatten np-concatenate np-zeros-and-ones np-eye-and-identity np-array-mathematics floor-ceil-and-rint np-sum-and-prod np-min-and-max np-mean-var-and-std np-dot-and-cross np-inner-and-outer np-polynomials np-linear-algebra
 words-score default-arguments""".split()
 assert len(HR_SLUGS) == 115
+
+from lists_hr import HR_ALGORITHMS, HR_DATA_STRUCTURES  # noqa: E402,F401
 
 # SOLID principles and the 23 Gang of Four patterns, in study order.
 DESIGN = [
