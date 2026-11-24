@@ -20,6 +20,8 @@ HackerRank (sources/hackerrank/*.md):
     ### Problem name
     <markdown body>
     ```stdin / ```stdout   (optional sample, hidden, run with --test)
+    ```check               (optional, replaces the stdout comparison when many outputs are valid;
+                            asserts on the variables `stdin` and `output`)
 
 Design (sources/design/*.md): same layout as HackerRank (## Section / ### Name).
     The ```python block runs as __main__ and its output must match the hidden ```stdout;
@@ -65,14 +67,14 @@ def slugify(s):
 
 def split_hidden(body):
     """Remove ```test / ```stdin / ```stdout blocks; return (visible_body, hidden dict)."""
-    hidden = {"test": [], "stdin": None, "stdout": None}
+    hidden = {"test": [], "stdin": None, "stdout": None, "check": None}
 
     def repl(m):
         lang = (m.group(1) or "").lower()
         if lang == "test":
             hidden["test"].append(m.group(2))
             return ""
-        if lang in ("stdin", "stdout"):
+        if lang in ("stdin", "stdout", "check"):
             hidden[lang] = m.group(2)
             return ""
         return m.group(0)
@@ -329,6 +331,12 @@ def run_hackerrank_tests(sections):
             ran += 1
             if r.returncode != 0:
                 failures.append(f"HR {title}: crashed\n{r.stderr[-600:]}")
+            elif p["hidden"]["check"] is not None:
+                # many valid answers: the hidden ```check block asserts on `stdin` and `output`
+                try:
+                    exec(compile(p["hidden"]["check"], f"{title}-check", "exec"), {"stdin": stdin, "output": got})
+                except Exception as e:
+                    failures.append(f"HR {title}: check failed {type(e).__name__}: {e}\n--- got\n{got[:600]}")
             elif stdout is not None and norm(got) != norm(stdout):
                 failures.append(f"HR {title}: output mismatch\n--- expected\n{stdout}\n--- got\n{got}")
     return ran, failures
